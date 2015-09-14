@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css"/>-->
+    <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.0.0/css/fixedHeader.dataTables.min.css"/>-->
+    <link rel="stylesheet" type="text/css" href="/static/main.css" />
+    <link rel="stylesheet" type="text/css" href="/static/font-awesome.min.css" />
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.0.0/js/dataTables.fixedHeader.min.js"></script>
+</head>
+<body>
+    <h1>[-P-U-] Plus Ultra</h1>
+    <h1>Estadisticas - Fortaleza</h1>
+    <h2>Miembros del clan:</h2>
+    <table id="player_stats" class="rowtable"  cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Total Cajas</th>
+                <th>7D Cajas</th>
+                <th>30D Cajas</th>
+                <th>Escaramuzas</th>
+                <th>Fortalezas</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for player in players_data %}
+            <tr>
+                <!--<td>{{ player.account_name}}</td>-->
+                <td><a href="http://es.wot-life.com/eu/player/{{ player.account_name }}-{{ player.account_id }}" target="_blank">{{ player.account_name}}</a></td>
+                <td class="text-center wn {{  player.total_resources_earned_rate }} datacol" >{{ player.total_resources_earned }}</td>
+                <td class="text-center wn {{  player.seven_day_resources_earned_rate }} datacol">{{ player.seven_day_resources_earned }}</td>
+                <td class="text-center wn {{  player.thirty_day_resources_earned_rate }} datacol" style="width: 90px">{{ player.thirty_day_resources_earned }}</td>
+                <td class="text-center datacol" >{{ player.stronghold_skirmish_battles }}</td>
+                <td class="text-center datacol">{{ player.stronghold_defense_battles }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <script language="JavaScript">
+        $(document).ready(function() {
+            $('#player_stats').DataTable({
+                "responsive": true,
+                "autoWidth": true,
+                "paging": false,
+                "searching": false,
+                "info": false,
+                "columnDefs":[
+                    {"orderable": true, "targets": [1,2,3]},
+//                    {"class": "all", "targets": [1,2]},
+                    {"orderSequence": ["desc", "asc"], "targets": [1,2,3,4,5]}
+                ],
+                "order": [[1, 'desc']]
+
+            });
+        } );
+    </script>
+</body>
+
+</html>
