@@ -43,7 +43,9 @@ class ClanControllerTests(unittest.TestCase):
             "account_name": 'test_player',
             "total_resources_earned": 5002,
             "stronghold_defense_battles": 9,
+            "thirty_day_defense_battles": 0,
             "stronghold_skirmish_battles": 731,
+            "thirty_day_skirmish_battles": 0,
             "seven_day_resources_earned": 0,
             "thirty_day_resources_earned": 0,
             "last_update": AppTime.get_now()
@@ -74,7 +76,9 @@ class ClanControllerTests(unittest.TestCase):
                        'stronghold_defense_battles': 10,
                        'seven_day_resources_earned': 320,
                        'thirty_day_resources_earned': 320,
-                       'last_update': AppTime.get_now()}
+                       'last_update': AppTime.get_now(),
+                       'thirty_day_defense_battles': 0,
+                       'thirty_day_skirmish_battles': 0}
         controller = ClanController()
         controller.create_player_stat(conn, player_data)
         row = PlayerRepository.get_player(conn, player_data['clan_id'], player_data['account_id'])
@@ -84,7 +88,9 @@ class ClanControllerTests(unittest.TestCase):
                     'account_name': u'test player',
                     'total_resources_earned': 1200,
                     'stronghold_skirmish_battles': 100,
+                    'thirty_day_skirmish_battles': 0,
                     'stronghold_defense_battles': 10,
+                    'thirty_day_defense_battles': 0,
                     'seven_day_resources_earned': 320,
                     'thirty_day_resources_earned': 320,
                     'last_update': str(AppTime.get_now())}

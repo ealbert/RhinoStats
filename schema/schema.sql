@@ -7,7 +7,9 @@ CREATE TABLE player_stats(
   seven_day_resources_earned INTEGER NOT NULL,
   thirty_day_resources_earned INTEGER NOT NULL,
   stronghold_defense_battles INTEGER NOT NULL,
+  thirty_day_defense_battles INTEGER NOT NULL,
   stronghold_skirmish_battles INTEGER NOT NULL,
+  thirty_day_skirmish_battles INTEGER NOT NULL,
   created_date timestamp NOT NULL,
   last_update timestamp NOT NULL
 );

@@ -14,7 +14,7 @@ class ClanController(object):
         return players_data
 
     def get_clan_members(self, connection, clan_id, app_id):
-        url = 'http://api.worldoftanks.eu/wgn/clans/info/?application_id={app_id}&clan_id={clan_id}'\
+        url = 'http://api.worldoftanks.eu/wgn/clans/info/?application_id={app_id}&clan_id={clan_id}' \
             .format(app_id=app_id, clan_id=clan_id)
         data = RequestUtils.retrieve_json(url)
         clan_data = data['data'][clan_id]
@@ -36,10 +36,7 @@ class ClanController(object):
                     self.create_snapshot(connection, player_data)
                     # calculate 30 day
                     from_date = AppTime.get_now() - datetime.timedelta(days=30)
-                    total_resources_earned = PlayerRepository.get_total_resources_at_date(connection, player_data['clan_id'],
-                                                                                          player_data['account_id'],
-                                                                                          from_date)
-                    player_data['thirty_day_resources_earned'] = player_data['total_resources_earned'] - total_resources_earned
+                    self._calculate_stats_at_date(connection, player_data, from_date)
                     # update player_stat
                     PlayerRepository.update_player_stats(connection, player_data)
                 players_data.append(player_data)
@@ -48,6 +45,14 @@ class ClanController(object):
                       .format(account_name=member['account_name'], error=str(e)))
         players_data.sort(key=lambda x: x['account_name'].lower())
         return players_data
+
+    def _calculate_stats_at_date(self, connection, player_data, from_date):
+        resources,  defenses, skirmishes = PlayerRepository.get_stats_at_date(connection, player_data['clan_id'],
+                                                                         player_data['account_id'],
+                                                                         from_date)
+        player_data['thirty_day_resources_earned'] = player_data['total_resources_earned'] - resources
+        player_data['thirty_day_defense_battles'] = player_data['stronghold_defense_battles'] - defenses
+        player_data['thirty_day_skirmish_battles'] = player_data['stronghold_skirmish_battles'] - skirmishes
 
     def get_player_data(self, connection, app_id, clan_id, account_id, account_name):
         record = PlayerRepository.get_player(connection, clan_id, account_id)
@@ -60,7 +65,7 @@ class ClanController(object):
         return player_data
 
     def _retrieve_account_stats(self, account_id, app_id):
-        url = 'http://api.worldoftanks.eu/wot/stronghold/accountstats/?application_id={app_id}&account_id={account_id}'\
+        url = 'http://api.worldoftanks.eu/wot/stronghold/accountstats/?application_id={app_id}&account_id={account_id}' \
             .format(app_id=app_id, account_id=account_id)
         return RequestUtils.retrieve_json(url)
 
@@ -70,7 +75,9 @@ class ClanController(object):
                player_data['account_name'],
                player_data['total_resources_earned'],
                player_data['stronghold_defense_battles'],
+               player_data['thirty_day_defense_battles'],
                player_data['stronghold_skirmish_battles'],
+               player_data['thirty_day_skirmish_battles'],
                player_data['seven_day_resources_earned'],
                player_data['thirty_day_resources_earned'],
                player_data['last_update'],
@@ -96,7 +103,3 @@ class ClanController(object):
         if diff_time < max_delta_time:
             return False
         return True
-
-
-
-

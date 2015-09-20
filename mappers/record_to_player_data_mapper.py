@@ -14,7 +14,9 @@ class RecordToPlayerDataMapper(object):
             "account_name": record['account_name'],
             "total_resources_earned": record['total_resources_earned'],
             "stronghold_defense_battles": record['stronghold_defense_battles'],
+            "thirty_day_defense_battles": record['thirty_day_defense_battles'],
             "stronghold_skirmish_battles": record['stronghold_skirmish_battles'],
+            "thirty_day_skirmish_battles": record['thirty_day_skirmish_battles'],
             "seven_day_resources_earned": record['seven_day_resources_earned'],
             "thirty_day_resources_earned": record['thirty_day_resources_earned'],
             "last_update": record['last_update']

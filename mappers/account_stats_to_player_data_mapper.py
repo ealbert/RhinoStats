@@ -15,7 +15,9 @@ class AccountStatsToPlayerDataMapper(object):
             "account_name": account_name,
             "total_resources_earned": data['total_resources_earned'],
             "stronghold_defense_battles": data['stronghold_defense']['battles'] if data['stronghold_defense'] else 0,
+            "thirty_day_defense_battles": 0,
             "stronghold_skirmish_battles": data['stronghold_skirmish']['battles'] if data['stronghold_skirmish'] else 0,
+            "thirty_day_skirmish_battles": 0,
             "seven_day_resources_earned": data['week_resources_earned'],
             "thirty_day_resources_earned": data['week_resources_earned'],
             "last_update": AppTime.get_now()

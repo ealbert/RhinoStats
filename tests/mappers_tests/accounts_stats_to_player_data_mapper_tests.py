@@ -27,7 +27,9 @@ class AccountStatsToPlayerDataMapperTests(unittest.TestCase):
             "account_name": 'test_player',
             "total_resources_earned": 5002,
             "stronghold_defense_battles": 9,
+            "thirty_day_defense_battles": 0,
             "stronghold_skirmish_battles": 731,
+            "thirty_day_skirmish_battles": 0,
             "seven_day_resources_earned": 0,
             "thirty_day_resources_earned": 0,
             "last_update": AppTime.get_now()

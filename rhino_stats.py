@@ -35,7 +35,7 @@ def rebuild_db():
 
 
 def connect_db():
-    database_path = os.path.join(APP_ROOT, 'database\\' + app.config['DATABASE'])
+    database_path = os.path.join(APP_ROOT, 'database/' + app.config['DATABASE'])
     return DbContext.get_connection(database_path)
 
 

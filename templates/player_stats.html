@@ -23,8 +23,10 @@
                 <th>Total Cajas</th>
                 <th>7D Cajas</th>
                 <th>30D Cajas</th>
-                <th>Escaramuzas</th>
-                <th>Fortalezas</th>
+                <th>Total Escaramuzas</th>
+                <th>30D Escaramuzas</th>
+                <th>Total Defensas</th>
+                <th>30D Defensas</th>
                 <th>Last Update</th>
             </tr>
         </thead>
@@ -37,7 +39,9 @@
                 <td class="text-center wn {{  player.seven_day_resources_earned_rate }} datacol">{{ player.seven_day_resources_earned }}</td>
                 <td class="text-center wn {{  player.thirty_day_resources_earned_rate }} datacol" style="width: 90px">{{ player.thirty_day_resources_earned }}</td>
                 <td class="text-center datacol" >{{ player.stronghold_skirmish_battles }}</td>
+                <td class="text-center datacol" >{{ player.thirty_day_skirmish_battles }}</td>
                 <td class="text-center datacol">{{ player.stronghold_defense_battles }}</td>
+                <td class="text-center datacol" >{{ player.thirty_day_defense_battles }}</td>
                 <td class="text-center" style="width:150px">{{ player.last_update }}</td>
             </tr>
             {% endfor %}
@@ -56,7 +60,7 @@
 //                    {"class": "all", "targets": [1,2]},
                     {"orderSequence": ["desc", "asc"], "targets": [1,2,3,4,5]}
                 ],
-                "order": [[2, 'desc']]
+                "order": [[3, 'desc']]
 
             });
         } );
