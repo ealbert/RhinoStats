@@ -21,7 +21,7 @@ def hello_world():
     clan_id = '500050913' # This is PU clan id
     players_data = ClanController().get_clan_stats(connect_db(), clan_id)
     enhanced_players_data = RatingCalculator.enhance_data(players_data)
-    return render_template('player_stats.html', players_data=enhanced_players_data)
+    return render_template('player_stats.html', players_data=enhanced_players_data, clan_id=clan_id)
 
 
 @app.route('/rebuild_db')
@@ -40,4 +40,4 @@ def connect_db():
 
 
 if __name__ == '__main__':
-    app.run()
+    app.run('0.0.0.0')

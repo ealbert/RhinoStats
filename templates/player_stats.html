@@ -13,12 +13,13 @@
     <script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.0.0/js/dataTables.fixedHeader.min.js"></script>
 </head>
 <body>
-    <h1>[-P-U-] Plus Ultra</h1>
+    <h1>[-P-U-] Plus Ultra</h1><img src="http://eu.wargaming.net/clans/media/clans/emblems/cl_913/{{ clan_id }}/emblem_64x64.png" style="float: right">
     <h1>Estadisticas - Fortaleza</h1>
     <h2>Miembros del clan:</h2>
     <table id="player_stats" class="rowtable"  cellspacing="0" width="100%">
         <thead>
             <tr>
+                <th>#</th>
                 <th>Name</th>
                 <th>Total Cajas</th>
                 <th>7D Cajas</th>
@@ -34,6 +35,7 @@
             {% for player in players_data %}
             <tr>
                 <!--<td>{{ player.account_name}}</td>-->
+                <td>1</td>
                 <td><a href="http://es.wot-life.com/eu/player/{{ player.account_name }}-{{ player.account_id }}" target="_blank">{{ player.account_name}}</a></td>
                 <td class="text-center wn {{  player.total_resources_earned_rate }} datacol" >{{ player.total_resources_earned }}</td>
                 <td class="text-center wn {{  player.seven_day_resources_earned_rate }} datacol">{{ player.seven_day_resources_earned }}</td>
@@ -49,20 +51,23 @@
     </table>
     <script language="JavaScript">
         $(document).ready(function() {
-            $('#player_stats').DataTable({
+            var t = $('#player_stats').DataTable({
                 "responsive": true,
                 "autoWidth": true,
                 "paging": false,
                 "searching": false,
                 "info": false,
                 "columnDefs":[
-                    {"orderable": true, "targets": [1,2,3]},
-//                    {"class": "all", "targets": [1,2]},
+                    {"orderable": false, "targets": [0]},
                     {"orderSequence": ["desc", "asc"], "targets": [1,2,3,4,5]}
                 ],
-                "order": [[3, 'desc']]
-
+                "order": [[4, 'desc']]
             });
+            t.on('order.dt search.dt', function () {
+                t.column(0, {search: 'applied', order: 'applied'}).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1;
+                });
+            }).draw();
         } );
     </script>
 </body>
