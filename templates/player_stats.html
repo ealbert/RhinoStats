@@ -13,8 +13,12 @@
     <script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.0.0/js/dataTables.fixedHeader.min.js"></script>
 </head>
 <body>
-    <h1>[-P-U-] Plus Ultra</h1><img src="http://eu.wargaming.net/clans/media/clans/emblems/cl_913/{{ clan_id }}/emblem_64x64.png" style="float: right">
+    <img src="http://eu.wargaming.net/clans/media/clans/emblems/cl_913/{{ clan_id }}/emblem_64x64.png" style="float: right">
+    </a>
+    <h1>[-P-U-] Plus Ultra</h1>
+    <a href="/csv"><img src="/static/images/download-csv-icon.gif" style="float: right"/></a>
     <h1>Estadisticas - Fortaleza</h1>
+
     <h2>Miembros del clan:</h2>
     <table id="player_stats" class="rowtable"  cellspacing="0" width="100%">
         <thead>
@@ -24,10 +28,10 @@
                 <th>Total Cajas</th>
                 <th>7D Cajas</th>
                 <th>30D Cajas</th>
-                <th>Total Escaramuzas</th>
                 <th>30D Escaramuzas</th>
-                <th>Total Defensas</th>
                 <th>30D Defensas</th>
+                <th>30D CW</th>
+                <th>30D Batallas</th>
                 <th>Last Update</th>
             </tr>
         </thead>
@@ -40,10 +44,10 @@
                 <td class="text-center wn {{  player.total_resources_earned_rate }} datacol" >{{ player.total_resources_earned }}</td>
                 <td class="text-center wn {{  player.seven_day_resources_earned_rate }} datacol">{{ player.seven_day_resources_earned }}</td>
                 <td class="text-center wn {{  player.thirty_day_resources_earned_rate }} datacol" style="width: 90px">{{ player.thirty_day_resources_earned }}</td>
-                <td class="text-center datacol" >{{ player.stronghold_skirmish_battles }}</td>
                 <td class="text-center datacol" >{{ player.thirty_day_skirmish_battles }}</td>
-                <td class="text-center datacol">{{ player.stronghold_defense_battles }}</td>
                 <td class="text-center datacol" >{{ player.thirty_day_defense_battles }}</td>
+                <td class="text-center datacol" >{{ player.thirty_day_clan_battles }}</td>
+                <td class="text-center datacol" >{{ player.thirty_day_all_battles }}</td>
                 <td class="text-center" style="width:150px">{{ player.last_update }}</td>
             </tr>
             {% endfor %}

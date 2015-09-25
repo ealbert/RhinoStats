@@ -23,3 +23,12 @@ class AccountStatsToPlayerDataMapper(object):
             "last_update": AppTime.get_now()
         }
         return player_data
+
+    @classmethod
+    def amend_player_data(cls, player_data, personal_stats, account_id):
+        data = personal_stats['data'][str(account_id)]['statistics']
+        player_data['clan_battles'] = data['clan']['battles'] if data['clan'] else 0
+        player_data['thirty_day_clan_battles'] = 0
+        player_data['all_battles'] = data['all']['battles'] if data['all'] else 0
+        player_data['thirty_day_all_battles'] = 0
+        return player_data

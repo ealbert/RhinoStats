@@ -19,6 +19,10 @@ class RecordToPlayerDataMapper(object):
             "thirty_day_skirmish_battles": record['thirty_day_skirmish_battles'],
             "seven_day_resources_earned": record['seven_day_resources_earned'],
             "thirty_day_resources_earned": record['thirty_day_resources_earned'],
+            "clan_battles": record['clan_battles'],
+            "thirty_day_clan_battles": record['thirty_day_clan_battles'],
+            "all_battles": record['all_battles'],
+            "thirty_day_all_battles": record['thirty_day_all_battles'],
             "last_update": record['last_update']
         }
         return player_data

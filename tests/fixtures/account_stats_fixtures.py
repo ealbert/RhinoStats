@@ -70,21 +70,22 @@ class AccountStatsFixtures(object):
             }
         }
 
-    def personal_data_response(self):
+    @classmethod
+    def personal_data_response(cls):
         return {
         "status": "ok",
         "meta": {
             "count": 1
         },
         "data": {
-            "500482937": {
+            "512841364": {
                 "client_language": "es",
                 "last_battle_time": 1443045485,
-                "account_id": 500482937,
+                "account_id": 512841364,
                 "created_at": 1305617362,
                 "updated_at": 1443045486,
-                "private": null,
-                "ban_time": null,
+                "private": None,
+                "ban_time": None,
                 "global_rating": 5695,
                 "clan_id": 500050913,
                 "statistics": {
@@ -128,17 +129,17 @@ class AccountStatsFixtures(object):
                         "explosion_hits": 0,
                         "piercings_received": 0,
                         "piercings": 0,
-                        "max_damage_tank_id": null,
+                        "max_damage_tank_id": None,
                         "xp": 0,
                         "survived_battles": 0,
                         "dropped_capture_points": 0,
                         "hits_percents": 0,
                         "draws": 0,
-                        "max_xp_tank_id": null,
+                        "max_xp_tank_id": None,
                         "battles": 0,
                         "damage_received": 0,
                         "avg_damage_assisted": 0.0,
-                        "max_frags_tank_id": null,
+                        "max_frags_tank_id": None,
                         "frags": 0,
                         "avg_damage_assisted_radio": 0.0,
                         "capture_points": 0,
@@ -222,7 +223,7 @@ class AccountStatsFixtures(object):
                     },
                     "stronghold_defense": {
                         "spotted": 2,
-                        "max_frags_tank_id": null,
+                        "max_frags_tank_id": None,
                         "max_xp": 0,
                         "direct_hits_received": 5,
                         "explosion_hits": 0,
@@ -233,12 +234,12 @@ class AccountStatsFixtures(object):
                         "dropped_capture_points": 0,
                         "hits_percents": 75,
                         "draws": 0,
-                        "max_xp_tank_id": null,
+                        "max_xp_tank_id": None,
                         "battles": 3,
                         "damage_received": 1810,
                         "frags": 1,
                         "capture_points": 68,
-                        "max_damage_tank_id": null,
+                        "max_damage_tank_id": None,
                         "max_damage": 0,
                         "hits": 18,
                         "battle_avg_xp": 177,
@@ -291,17 +292,17 @@ class AccountStatsFixtures(object):
                         "explosion_hits": 0,
                         "piercings_received": 0,
                         "piercings": 0,
-                        "max_damage_tank_id": null,
+                        "max_damage_tank_id": None ,
                         "xp": 0,
                         "survived_battles": 0,
                         "dropped_capture_points": 0,
                         "hits_percents": 0,
                         "draws": 0,
-                        "max_xp_tank_id": null,
+                        "max_xp_tank_id": None,
                         "battles": 0,
                         "damage_received": 0,
                         "avg_damage_assisted": 0.0,
-                        "max_frags_tank_id": null,
+                        "max_frags_tank_id": None,
                         "frags": 0,
                         "avg_damage_assisted_radio": 0.0,
                         "capture_points": 0,
@@ -353,13 +354,13 @@ class AccountStatsFixtures(object):
                         "tanking_factor": 0.25
                     },
                     "max_damage_tank_id": 5697,
-                    "frags": null,
+                    "frags": None,
                     "max_damage": 5373,
                     "max_damage_vehicle": 5697,
                     "max_frags": 9
                 },
-                "nickname": "CLV_LINTO",
-                "ban_info": null,
+                "nickname": "TestPlayer",
+                "ban_info": None,
                 "logout_at": 1443045308
             }
         }

@@ -32,6 +32,8 @@ class ClanController(object):
                     # get accounts stat
                     account_stats = self._retrieve_account_stats(account_id, app_id)
                     player_data = AccountStatsToPlayerDataMapper.map(account_stats, account_id, account_name)
+                    personal_stats = self._retrieve_personal_stats(account_id, app_id)
+                    player_data = AccountStatsToPlayerDataMapper.amend_player_data(player_data, personal_stats, account_id)
                     # create snapshot
                     self.create_snapshot(connection, player_data)
                     # calculate 30 day
@@ -47,18 +49,22 @@ class ClanController(object):
         return players_data
 
     def _calculate_stats_at_date(self, connection, player_data, from_date):
-        resources,  defenses, skirmishes = PlayerRepository.get_stats_at_date(connection, player_data['clan_id'],
-                                                                         player_data['account_id'],
-                                                                         from_date)
+        resources,  defenses, skirmishes, clan, all_battles = PlayerRepository.get_stats_at_date(connection, player_data['clan_id'],
+                                                                                                 player_data['account_id'],
+                                                                                                 from_date)
         player_data['thirty_day_resources_earned'] = player_data['total_resources_earned'] - resources
         player_data['thirty_day_defense_battles'] = player_data['stronghold_defense_battles'] - defenses
         player_data['thirty_day_skirmish_battles'] = player_data['stronghold_skirmish_battles'] - skirmishes
+        player_data['thirty_day_clan_battles'] = player_data['clan_battles'] - clan
+        player_data['thirty_day_all_battles'] = player_data['all_battles'] - all_battles
 
     def get_player_data(self, connection, app_id, clan_id, account_id, account_name):
         record = PlayerRepository.get_player(connection, clan_id, account_id)
         if record is None:
             account_stats = self._retrieve_account_stats(account_id, app_id)
             player_data = AccountStatsToPlayerDataMapper.map(account_stats, account_id, account_name)
+            personal_stats = self._retrieve_personal_stats(account_id, app_id)
+            player_data = AccountStatsToPlayerDataMapper.amend_player_data(player_data, personal_stats, account_id)
             self.create_player_stat(connection, player_data)
         else:
             player_data = RecordToPlayerDataMapper.map(record)
@@ -66,6 +72,11 @@ class ClanController(object):
 
     def _retrieve_account_stats(self, account_id, app_id):
         url = 'http://api.worldoftanks.eu/wot/stronghold/accountstats/?application_id={app_id}&account_id={account_id}' \
+            .format(app_id=app_id, account_id=account_id)
+        return RequestUtils.retrieve_json(url)
+
+    def _retrieve_personal_stats(self, account_id, app_id):
+        url = 'http://api.worldoftanks.eu/wot/account/info/?application_id={app_id}&account_id={account_id}' \
             .format(app_id=app_id, account_id=account_id)
         return RequestUtils.retrieve_json(url)
 
@@ -80,6 +91,10 @@ class ClanController(object):
                player_data['thirty_day_skirmish_battles'],
                player_data['seven_day_resources_earned'],
                player_data['thirty_day_resources_earned'],
+               player_data['clan_battles'],
+               player_data['thirty_day_clan_battles'],
+               player_data['all_battles'],
+               player_data['thirty_day_all_battles'],
                player_data['last_update'],
                player_data['last_update']]
         PlayerRepository.create_player_stat(connection, row)
@@ -91,6 +106,8 @@ class ClanController(object):
                player_data['total_resources_earned'],
                player_data['stronghold_defense_battles'],
                player_data['stronghold_skirmish_battles'],
+               player_data['clan_battles'],
+               player_data['all_battles'],
                player_data['last_update']]
         PlayerRepository.create_player_stat_snapshot(connection, row)
 

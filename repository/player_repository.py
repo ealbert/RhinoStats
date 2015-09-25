@@ -13,6 +13,8 @@ class PlayerRepository(object):
                     stronghold_defense_battles, thirty_day_defense_battles,
                     stronghold_skirmish_battles, thirty_day_skirmish_battles,
                     seven_day_resources_earned, thirty_day_resources_earned,
+                    clan_battles, thirty_day_clan_battles,
+                    all_battles, thirty_day_all_battles,
                     datetime(last_update) last_update
                 FROM
                     player_stats
@@ -30,7 +32,7 @@ class PlayerRepository(object):
     @classmethod
     def get_stats_at_date(cls, connection, clan_id, account_id, from_date):
         sql = """
-            SELECT total_resources_earned, stronghold_defense_battles, stronghold_skirmish_battles
+            SELECT total_resources_earned, stronghold_defense_battles, stronghold_skirmish_battles, clan_battles, all_battles
               from player_stats_snapshot
               where
                 created_date >= ? AND
@@ -47,7 +49,9 @@ class PlayerRepository(object):
                 return 0
             return row['total_resources_earned'], \
                    row['stronghold_defense_battles'], \
-                   row['stronghold_skirmish_battles']
+                   row['stronghold_skirmish_battles'], \
+                   row['clan_battles'], \
+                   row['all_battles']
 
     @classmethod
     def get_player_stats(cls, connection, clan_id, account_id, from_date, to_date):
@@ -109,8 +113,10 @@ class PlayerRepository(object):
                  stronghold_defense_battles, thirty_day_defense_battles,
                     stronghold_skirmish_battles, thirty_day_skirmish_battles,
                     seven_day_resources_earned, thirty_day_resources_earned,
+                    clan_battles, thirty_day_clan_battles,
+                    all_battles, thirty_day_all_battles,
                     created_date, last_update)
-              VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+              VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
               """
         with connection:
             cur = connection.cursor()
@@ -121,8 +127,10 @@ class PlayerRepository(object):
         sql = """
               INSERT INTO player_stats_snapshot
                  (clan_id, account_id, total_resources_earned, stronghold_defense_battles,
-                    stronghold_skirmish_battles, created_date)
-              VALUES(?, ?, ?, ?, ?, ?)
+                    stronghold_skirmish_battles,
+                    clan_battles, all_battles,
+                    created_date)
+              VALUES(?, ?, ?, ?, ?, ?, ?, ?)
               """
         with connection:
             cur = connection.cursor()

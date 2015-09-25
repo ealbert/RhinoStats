@@ -12,12 +12,11 @@ import unittest
 
 
 class ClanControllerTests(unittest.TestCase):
-
     def test_player_does_not_require_calculation(self):
         TestTime.set_app_time(datetime.datetime(2015, 8, 1, 12, 0, 0))
         player_data = {'last_update': AppTime.get_now()}
         controller = ClanController()
-        result = controller.requires_recalculation( player_data)
+        result = controller.requires_recalculation(player_data)
         expected = False
         self.assertEqual(expected, result)
 
@@ -36,6 +35,7 @@ class ClanControllerTests(unittest.TestCase):
         conn = DatabaseUtils.get_db_connection()
         controller = ClanController()
         controller._retrieve_account_stats = lambda account_id, app_id: AccountStatsFixtures.standard_accounts_record()
+        controller._retrieve_personal_stats = lambda account_id, app_id: AccountStatsFixtures.personal_data_response()
         player_data = controller.get_player_data(conn, 'app_id', 500050913, 512841364, 'test_player')
         expected = {
             "clan_id": 500050913,
@@ -48,12 +48,18 @@ class ClanControllerTests(unittest.TestCase):
             "thirty_day_skirmish_battles": 0,
             "seven_day_resources_earned": 0,
             "thirty_day_resources_earned": 0,
+            'clan_battles': 3,
+            'thirty_day_clan_battles': 0,
+            'all_battles': 9401,
+            'thirty_day_all_battles': 0,
             "last_update": AppTime.get_now()
         }
+        self.maxDiff = None
         self.assertEqual(expected, player_data)
         from_date = AppTime.get_now()
         to_date = from_date - datetime.timedelta(days=30)
-        rows = PlayerRepository.get_player_stats(conn, player_data['clan_id'], player_data['account_id'], from_date, to_date)
+        rows = PlayerRepository.get_player_stats(conn, player_data['clan_id'], player_data['account_id'], from_date,
+                                                 to_date)
         self.assertEqual(1, len(rows))
         player_stat_snapshot_dict = dict(zip(rows[0].keys(), rows[0]))
         expected = {'stronghold_defense_battles': 9,
@@ -78,7 +84,11 @@ class ClanControllerTests(unittest.TestCase):
                        'thirty_day_resources_earned': 320,
                        'last_update': AppTime.get_now(),
                        'thirty_day_defense_battles': 0,
-                       'thirty_day_skirmish_battles': 0}
+                       'thirty_day_skirmish_battles': 0,
+                       'clan_battles': 10,
+                       'thirty_day_clan_battles': 5,
+                       'all_battles': 100,
+                       'thirty_day_all_battles': 50}
         controller = ClanController()
         controller.create_player_stat(conn, player_data)
         row = PlayerRepository.get_player(conn, player_data['clan_id'], player_data['account_id'])
@@ -93,11 +103,16 @@ class ClanControllerTests(unittest.TestCase):
                     'thirty_day_defense_battles': 0,
                     'seven_day_resources_earned': 320,
                     'thirty_day_resources_earned': 320,
+                    'clan_battles': 10,
+                    'thirty_day_clan_battles': 5,
+                    'all_battles': 100,
+                    'thirty_day_all_battles': 50,
                     'last_update': str(AppTime.get_now())}
         self.assertEqual(expected, player_stat_dict)
         from_date = AppTime.get_now()
         to_date = from_date - datetime.timedelta(days=30)
-        rows = PlayerRepository.get_player_stats(conn, player_data['clan_id'], player_data['account_id'], from_date, to_date)
+        rows = PlayerRepository.get_player_stats(conn, player_data['clan_id'], player_data['account_id'], from_date,
+                                                 to_date)
         self.assertEqual(1, len(rows))
         player_stat_snapshot_dict = dict(zip(rows[0].keys(), rows[0]))
         expected = {'stronghold_defense_battles': 10,
@@ -107,6 +122,7 @@ class ClanControllerTests(unittest.TestCase):
                     'total_resources_earned': 1200,
                     'created_date': str(AppTime.get_now())}
         self.assertEqual(expected, player_stat_snapshot_dict)
+
 
 if __name__ == '__main__':
     unittest.main()

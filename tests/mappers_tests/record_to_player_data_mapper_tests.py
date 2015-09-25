@@ -12,17 +12,21 @@ class RecordToPlayerDataMapperTests(unittest.TestCase):
     def test_map(self):
         now = AppTime.get_now()
         record = {"clan_id": 500050913,
-            "account_id": 512841364,
-            "account_name": 'test_player',
-            "total_resources_earned": 5002,
-            "stronghold_defense_battles": 9,
-            "thirty_day_defense_battles": 0,
-            "stronghold_skirmish_battles": 731,
-            "thirty_day_skirmish_battles": 0,
-            "seven_day_resources_earned": 0,
-            "thirty_day_resources_earned": 0,
-            "last_update": now
-        }
+                  "account_id": 512841364,
+                  "account_name": 'test_player',
+                  "total_resources_earned": 5002,
+                  "stronghold_defense_battles": 9,
+                  "thirty_day_defense_battles": 0,
+                  "stronghold_skirmish_battles": 731,
+                  "thirty_day_skirmish_battles": 0,
+                  "seven_day_resources_earned": 0,
+                  "thirty_day_resources_earned": 0,
+                  'clan_battles': 3,
+                  'thirty_day_clan_battles': 0,
+                  'all_battles': 9401,
+                  'thirty_day_all_battles': 0,
+                  "last_update": now
+                  }
         expected = {
             "clan_id": 500050913,
             "account_id": 512841364,
@@ -34,6 +38,10 @@ class RecordToPlayerDataMapperTests(unittest.TestCase):
             "thirty_day_skirmish_battles": 0,
             "seven_day_resources_earned": 0,
             "thirty_day_resources_earned": 0,
+            'clan_battles': 3,
+            'thirty_day_clan_battles': 0,
+            'all_battles': 9401,
+            'thirty_day_all_battles': 0,
             "last_update": now
         }
         result = RecordToPlayerDataMapper.map(record)

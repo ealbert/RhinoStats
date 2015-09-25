@@ -28,26 +28,29 @@ class ClanController30DayTests(unittest.TestCase):
             30 day = 65
         """""
         TestTime.set_app_time(datetime.datetime(2015, 8, 1))
-        player_stats = AccountStatsFixtures.standard_accounts_record()
+        account_stats = AccountStatsFixtures.standard_accounts_record()
+        player_stats = AccountStatsFixtures.personal_data_response()
         conn = DatabaseUtils.get_db_connection()
         DatabaseUtils.recreate_database(conn)
         conn = DatabaseUtils.get_db_connection()
         controller = ClanController()
-        controller._retrieve_account_stats = lambda account_id, app_id: player_stats
+        controller._retrieve_account_stats = lambda account_id, app_id: account_stats
+        controller._retrieve_personal_stats = lambda account_id, app_id: player_stats
         members = [{'account_id': 512841364, 'account_name': 'test_player'}]
         players_data = controller.get_players_data(conn, 123, 123, members)
         self.assertEqual(1, len(players_data))
         TestTime.set_app_time(datetime.datetime(2015, 8, 5))
-        self._amend_fixture_details(player_stats, 10, 1, 10)
+        self._amend_accounts_stats(account_stats, 10, 1, 10)
         controller.get_players_data(conn, 123, 500050913, members)
         TestTime.set_app_time(datetime.datetime(2015, 8, 10))
-        self._amend_fixture_details(player_stats, 35, 2, 45)
+        self._amend_accounts_stats(account_stats, 35, 2, 45)
         controller.get_players_data(conn, 123, 500050913, members)
         TestTime.set_app_time(datetime.datetime(2015, 8, 15))
-        self._amend_fixture_details(player_stats, 0, 2, 35)
+        self._amend_accounts_stats(account_stats, 0, 2, 35)
         controller.get_players_data(conn, 123, 500050913, members)
         TestTime.set_app_time(datetime.datetime(2015, 8, 25))
-        self._amend_fixture_details(player_stats, 20, 1, 20, 10)
+        self._amend_accounts_stats(account_stats, 20, 1, 20, 10)
+        self._amend_player_stats(player_stats, 21, 10)
         controller.get_players_data(conn, 123, 500050913, members)
         TestTime.set_app_time(datetime.datetime(2015, 8, 31))
         players_data = controller.get_players_data(conn, 123, 500050913, members)
@@ -55,6 +58,8 @@ class ClanController30DayTests(unittest.TestCase):
             "clan_id": 500050913,
             "account_id": 512841364,
             "account_name": 'test_player',
+            'all_battles':9422,
+            'clan_battles': 13,
             "total_resources_earned": 5067,
             "stronghold_defense_battles": 19,
             "thirty_day_defense_battles": 10,
@@ -62,16 +67,23 @@ class ClanController30DayTests(unittest.TestCase):
             "thirty_day_skirmish_battles": 6,
             "seven_day_resources_earned": 20,
             "thirty_day_resources_earned": 65,
+            'thirty_day_clan_battles': 10,
+            'thirty_day_all_battles': 21,
             "last_update": AppTime.get_now()
         }
         self.maxDiff = None
         self.assertEqual(expected, players_data[0])
 
-    def _amend_fixture_details(self, player_stats, additional_resources, skirmish_battles, week_resources, defense_battles=0):
-        player_stats['data']['512841364']['total_resources_earned'] += additional_resources
-        player_stats['data']['512841364']['stronghold_skirmish']['battles'] += skirmish_battles
-        player_stats['data']['512841364']['week_resources_earned'] = week_resources
-        player_stats['data']['512841364']['stronghold_defense']['battles'] += defense_battles
+    def _amend_accounts_stats(self, account_stats, additional_resources, skirmish_battles, week_resources, defense_battles=0):
+        account_stats['data']['512841364']['total_resources_earned'] += additional_resources
+        account_stats['data']['512841364']['stronghold_skirmish']['battles'] += skirmish_battles
+        account_stats['data']['512841364']['week_resources_earned'] = week_resources
+        account_stats['data']['512841364']['stronghold_defense']['battles'] += defense_battles
+
+    def _amend_player_stats(self, player_stats, all_battles, clan_battles):
+        player_stats['data']['512841364']['statistics']['all']['battles'] += all_battles
+        player_stats['data']['512841364']['statistics']['clan']['battles'] += clan_battles
+
 
 if __name__ == '__main__':
     unittest.main()
