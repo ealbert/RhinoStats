@@ -5,7 +5,7 @@ import os
 from flask import Flask, render_template, make_response
 from controllers.clan_controller import ClanController
 from repository.db_context import DbContext
-from utils.csv_exporter import CsvExporter
+from utils.csv_exporter import CsvExporter, excel_semicolon
 from utils.rating_calculator import RatingCalculator
 
 DATABASE = 'wot_fortaleza.db'
@@ -32,7 +32,7 @@ def clan_stats_csv():
     players_data = ClanController().get_clan_stats(connect_db(), clan_id)
     data = CsvExporter.get_data_into_list(players_data)
     si = StringIO()
-    cw = csv.writer(si, delimiter='\t', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
+    cw = csv.writer(si, dialect=excel_semicolon)
     cw.writerows(data)
     output = make_response(si.getvalue())
     output.headers["Content-Disposition"] = "attachment; filename=rhino_stats.csv"

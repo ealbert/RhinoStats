@@ -1,8 +1,9 @@
+import csv
+
 __author__ = 'enrique'
 
 
 class CsvExporter(object):
-
     @classmethod
     def get_data_into_list(cls, data):
         output = []
@@ -11,3 +12,7 @@ class CsvExporter(object):
         for player in data:
             output.append(list(player.values()))
         return output
+
+
+class excel_semicolon(csv.excel):
+    delimiter = ';'
