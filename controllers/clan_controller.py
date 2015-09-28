@@ -117,7 +117,7 @@ class ClanController(object):
             if isinstance(player_data['last_update'], datetime.datetime) \
             else datetime.datetime.strptime(player_data['last_update'], '%Y-%m-%d %H:%M:%S')
         diff_time = AppTime.get_now() - last_update
-        max_delta_time = datetime.timedelta(hours=1)
+        max_delta_time = datetime.timedelta(days=1)
         if diff_time < max_delta_time:
             return False
         return True
