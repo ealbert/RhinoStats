@@ -32,7 +32,7 @@ def clan_stats_csv():
     players_data = ClanController().get_clan_stats(connect_db(), clan_id)
     data = CsvExporter.get_data_into_list(players_data)
     si = StringIO()
-    cw = csv.writer(si)
+    cw = csv.writer(si, delimiter='\t', quotechar='"', quoting=csv.QUOTE_NONNUMERIC)
     cw.writerows(data)
     output = make_response(si.getvalue())
     output.headers["Content-Disposition"] = "attachment; filename=rhino_stats.csv"
