@@ -27,7 +27,10 @@ class AccountStatsToPlayerDataMapper(object):
     @classmethod
     def amend_player_data(cls, player_data, personal_stats, account_id):
         data = personal_stats['data'][str(account_id)]['statistics']
-        player_data['clan_battles'] = data['clan']['battles'] if data['clan'] else 0
+        clan_battles = data['globalmap_absolute']['battles'] if data['globalmap_absolute'] else 0
+        clan_battles += data['globalmap_middle']['battles'] if data['globalmap_middle'] else 0
+        clan_battles += data['globalmap_champion']['battles'] if data['globalmap_middle'] else 0
+        player_data['clan_battles'] = clan_battles
         player_data['thirty_day_clan_battles'] = 0
         player_data['all_battles'] = data['all']['battles'] if data['all'] else 0
         player_data['thirty_day_all_battles'] = 0

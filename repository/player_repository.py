@@ -1,7 +1,7 @@
 from utils.app_time import AppTime
-
-__author__ = 'eagleiser'
 import sqlite3 as lite
+__author__ = 'eagleiser'
+
 
 
 class PlayerRepository(object):
@@ -81,9 +81,13 @@ class PlayerRepository(object):
                 stronghold_defense_battles = ?,
                 stronghold_skirmish_battles = ?,
                 seven_day_resources_earned = ?,
+                clan_battles = ?,
+                all_battles = ?,
                 thirty_day_resources_earned = ?,
                 thirty_day_defense_battles = ?,
                 thirty_day_skirmish_battles = ?,
+                thirty_day_clan_battles = ?,
+                thirty_day_all_battles = ?,
                 last_update = ?
             WHERE
                 clan_id = ? AND
@@ -94,9 +98,13 @@ class PlayerRepository(object):
             player_data['stronghold_defense_battles'],
             player_data['stronghold_skirmish_battles'],
             player_data['seven_day_resources_earned'],
+            player_data['clan_battles'],
+            player_data['all_battles'],
             player_data['thirty_day_resources_earned'],
             player_data['thirty_day_defense_battles'],
             player_data['thirty_day_skirmish_battles'],
+            player_data['thirty_day_clan_battles'],
+            player_data['thirty_day_all_battles'],
             AppTime.get_now(),
             player_data['clan_id'],
             player_data['account_id']

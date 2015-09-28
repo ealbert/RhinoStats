@@ -76,7 +76,8 @@ class ClanController(object):
         return RequestUtils.retrieve_json(url)
 
     def _retrieve_personal_stats(self, account_id, app_id):
-        url = 'http://api.worldoftanks.eu/wot/account/info/?application_id={app_id}&account_id={account_id}' \
+        url = 'http://api.worldoftanks.eu/wot/account/info/?application_id={app_id}&account_id={account_id}&' \
+              'extra=statistics.globalmap_absolute,statistics.globalmap_champion,statistics.globalmap_middle' \
             .format(app_id=app_id, account_id=account_id)
         return RequestUtils.retrieve_json(url)
 
@@ -116,7 +117,7 @@ class ClanController(object):
             if isinstance(player_data['last_update'], datetime.datetime) \
             else datetime.datetime.strptime(player_data['last_update'], '%Y-%m-%d %H:%M:%S')
         diff_time = AppTime.get_now() - last_update
-        max_delta_time = datetime.timedelta(days=1)
+        max_delta_time = datetime.timedelta(hours=1)
         if diff_time < max_delta_time:
             return False
         return True

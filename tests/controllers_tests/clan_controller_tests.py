@@ -48,9 +48,9 @@ class ClanControllerTests(unittest.TestCase):
             "thirty_day_skirmish_battles": 0,
             "seven_day_resources_earned": 0,
             "thirty_day_resources_earned": 0,
-            'clan_battles': 3,
+            'clan_battles': 46,
             'thirty_day_clan_battles': 0,
-            'all_battles': 9401,
+            'all_battles': 25346,
             'thirty_day_all_battles': 0,
             "last_update": AppTime.get_now()
         }

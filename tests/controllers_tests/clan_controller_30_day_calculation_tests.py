@@ -58,8 +58,8 @@ class ClanController30DayTests(unittest.TestCase):
             "clan_id": 500050913,
             "account_id": 512841364,
             "account_name": 'test_player',
-            'all_battles':9422,
-            'clan_battles': 13,
+            'all_battles':25367,
+            'clan_battles': 46,
             "total_resources_earned": 5067,
             "stronghold_defense_battles": 19,
             "thirty_day_defense_battles": 10,
@@ -67,7 +67,7 @@ class ClanController30DayTests(unittest.TestCase):
             "thirty_day_skirmish_battles": 6,
             "seven_day_resources_earned": 20,
             "thirty_day_resources_earned": 65,
-            'thirty_day_clan_battles': 10,
+            'thirty_day_clan_battles': 0,
             'thirty_day_all_battles': 21,
             "last_update": AppTime.get_now()
         }
