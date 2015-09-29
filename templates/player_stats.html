@@ -13,25 +13,25 @@
     <script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.0.0/js/dataTables.fixedHeader.min.js"></script>
 </head>
 <body>
-    <img src="http://eu.wargaming.net/clans/media/clans/emblems/cl_913/{{ clan_id }}/emblem_64x64.png" style="float: right">
+    <a href="/"><H1>RhinoStats</H1></a>
+    <img src="{{ clan_details['emblems']['x64']['wot'] }}"  style="float: right">
     </a>
-    <h1>[-P-U-] Plus Ultra</h1>
-    <a href="/csv"><img src="/static/images/download-csv-icon.gif" style="float: right"/></a>
-    <h1>Estadisticas - Fortaleza</h1>
-
-    <h2>Miembros del clan:</h2>
+    <h1>[{{ clan_details['clan_tag'] }}] {{ clan_details['clan_name'] }}</h1>
+    <a href="/csv/{{ clan_details['clan_id'] }}"><img src="/static/images/download-csv-icon.gif" style="float: right"/></a>
+    <h1>Clan Stats - Stronghold Resources And More</h1>
+    <h2>Clan Members</h2>
     <table id="player_stats" class="rowtable"  cellspacing="0" width="100%">
         <thead>
             <tr>
                 <th>#</th>
                 <th>Name</th>
-                <th>Total Cajas</th>
-                <th>7D Cajas</th>
-                <th>30D Cajas</th>
-                <th>30D Escaramuzas</th>
-                <th>30D Defensas</th>
+                <th>Total Resources</th>
+                <th>7D Resources</th>
+                <th>30D Resources</th>
+                <th>30D Skirmishes</th>
+                <th>30D Stronghold</th>
                 <th>30D CW</th>
-                <th>30D Batallas</th>
+                <th>30D All</th>
                 <th>Last Update</th>
             </tr>
         </thead>

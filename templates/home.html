@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>RhinoStats</title>
+    <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css"/>-->
+    <!--<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/fixedheader/3.0.0/css/fixedHeader.dataTables.min.css"/>-->
+    <link rel="stylesheet" type="text/css" href="/static/main.css" />
+    <link rel="stylesheet" type="text/css" href="/static/font-awesome.min.css" />
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.0.0/js/dataTables.fixedHeader.min.js"></script>
+</head>
+<body>
+    <H1>RhinoStats</H1>
+    <div class="test">
+        <label for="clanTab" style="float: left; background-color: #ff6a00; margin-right: 5px; border-radius: 3px;
+        text-align: center; line-height: 30px;">Clan</label>
+    </div>
+    <form action="/search_clan" method="post" style="max-width: 500px">
+        <div class="input-group">
+            <input class="dk" id="searchbox" type="text" placeholder="Tag or Name" name="search" value="{{ context['clan_name'] }}" maxlength="30">
+            <span><button class="dk"><i class="fa fa-search fa-lg"></i></button></span>
+        </div>
+    </form>
+    {% if context['msg'] %}
+    <div class="alerts">
+        <div class="alert alert-info">
+            <p>{{ context['msg'] }}</p>
+        </div>
+    </div>
+    {% endif %}
+    {% if context['search_details'] %}
+        {% for clan in context['search_details'] %}
+        <div class="clan" style="padding: 10px; font-weight: bold;">
+            <span >
+            <a href="/clan_stats/{{ clan['clan_id'] }}">
+                <img src="{{ clan['emblems']['x64']['wot'] }}" style="vertical-align: middle">
+                {{ clan['tag'] }}
+                {{ clan['name'] }}
+            </a>
+                </span>
+        </div>
+        {% endfor %}
+    {% else %}
+        <div>
+        <H2>News</H2>
+            <h3>Site Goes Live - 29 Sept</h3>
+            <p>We have made the web site available for any EU clan to retrieve members stronghold details.
+            The only language the page supports is English currently.</p>
+            <p>On the 30 day stats, WG does not provide those so clans would need to wait some days before they get any meaningful figures.</p>
+            <p>The site is running on a slow machine so clan updates (maximum once every 24 hrs) can take up to 2 minutes -- we are hoping we can improve it</p>
+        </div>
+        <div style="font-size: 12px; font-weight: bold">
+        <br>
+            <a href="mailto:themuddyside@gmail.com?subject=RhinoStats">Support/Suggestions&nbsp;&nbsp;<i class="fa fa-envelope"></i></a>
+        </div>
+    {% endif %}
+
+
+</body>
+</html>
