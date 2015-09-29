@@ -7,11 +7,19 @@ from mappers.account_stats_to_player_data_mapper import AccountStatsToPlayerData
 
 
 class ClanController(object):
+    app_id = '2a138f1eafc3834fe2c3eecbd71ee762'
+
+    def find_clan(self, clan_name):
+        url = 'http://api.worldoftanks.eu/wgn/clans/list/?application_id={app_id}&search={clan_name}&limit=20' \
+            .format(app_id=self.app_id, clan_name=clan_name)
+        json = RequestUtils.retrieve_json(url)
+        return json['data']
+
+
     def get_clan_stats(self, connection, clan_id):
-        app_id = '2a138f1eafc3834fe2c3eecbd71ee762'
-        members = self.get_clan_members(connection, clan_id, app_id)
-        players_data = self.get_players_data(connection, app_id, clan_id, members)
-        return players_data
+        members, clan_details = self.get_clan_members(connection, clan_id, self.app_id)
+        players_data = self.get_players_data(connection, self.app_id, clan_id, members)
+        return players_data, clan_details
 
     def get_clan_members(self, connection, clan_id, app_id):
         url = 'http://api.worldoftanks.eu/wgn/clans/info/?application_id={app_id}&clan_id={clan_id}' \
@@ -19,7 +27,8 @@ class ClanController(object):
         data = RequestUtils.retrieve_json(url)
         clan_data = data['data'][clan_id]
         members = clan_data['members']
-        return members
+        clan_details = {'clan_name': clan_data['name'], 'clan_tag': clan_data['tag'], 'clan_id': clan_id, 'emblems': clan_data['emblems']}
+        return members, clan_details
 
     def get_players_data(self, connection, app_id, clan_id, members):
         players_data = []
