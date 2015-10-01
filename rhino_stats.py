@@ -2,7 +2,7 @@ import csv
 from io import StringIO
 import os
 
-from flask import Flask, render_template, make_response, request
+from flask import Flask, render_template, make_response, request, redirect, url_for
 from controllers.clan_controller import ClanController
 from repository.db_context import DbContext
 from utils.csv_exporter import CsvExporter, excel_semicolon
@@ -35,13 +35,15 @@ def search_clan():
             return render_template('home.html', context={'msg': msg, 'search_details': search_details,
                                                          'clan_name': clan_name})
         else:
-            return _clan_stats(search_details[0]['clan_id'])
+            clan_id = str((search_details[0]['clan_id']))
+            return redirect(url_for('clan_stats', clan_id=clan_id))
+            return clan_stats(clan_id)
     else:
         msg = 'Clan was not found with that name or/and tag'
         return render_template('home.html', context={'msg': msg, 'search_details': [], 'clan_name': clan_name})
 
 @app.route('/clan_stats/<clan_id>')
-def _clan_stats(clan_id):
+def clan_stats(clan_id):
     players_data, clan_details = ClanController().get_clan_stats(connect_db(), clan_id)
     enhanced_players_data = RatingCalculator.enhance_data(players_data)
     return render_template('player_stats.html', players_data=enhanced_players_data, clan_details=clan_details)

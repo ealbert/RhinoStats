@@ -13,7 +13,17 @@
     <script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.0.0/js/dataTables.fixedHeader.min.js"></script>
 </head>
 <body>
-    <a href="/"><H1>RhinoStats</H1></a>
+    <img src="/static/images/rhino-icon.png" style="float: left;width: 40px; height: 40px; margin-right: 10px;"><H1 style="line-height: 40px;">RhinoStats</H1>
+    <div class="test">
+        <label for="clanTab" style="float: left; background-color: #ff6a00; margin-right: 5px; border-radius: 3px;
+        text-align: center; line-height: 30px;">Clan</label>
+    </div>
+    <form action="/search_clan" method="post" style="max-width: 500px">
+        <div class="input-group">
+            <input class="dk" id="searchbox" type="text" placeholder="Tag or Name" name="search" value="" maxlength="30">
+            <span><button class="dk"><i class="fa fa-search fa-lg"></i></button></span>
+        </div>
+    </form>
     <img src="{{ clan_details['emblems']['x64']['wot'] }}"  style="float: right">
     </a>
     <h1>[{{ clan_details['clan_tag'] }}] {{ clan_details['clan_name'] }}</h1>

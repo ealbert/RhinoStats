@@ -13,7 +13,7 @@
     <script type="text/javascript" src="https://cdn.datatables.net/fixedheader/3.0.0/js/dataTables.fixedHeader.min.js"></script>
 </head>
 <body>
-    <H1>RhinoStats</H1>
+    <img src="/static/images/rhino-icon.png" style="float: left;width: 40px; height: 40px; margin-right: 10px;"><H1 style="line-height: 40px;">RhinoStats</H1>
     <div class="test">
         <label for="clanTab" style="float: left; background-color: #ff6a00; margin-right: 5px; border-radius: 3px;
         text-align: center; line-height: 30px;">Clan</label>
@@ -37,7 +37,7 @@
             <span >
             <a href="/clan_stats/{{ clan['clan_id'] }}">
                 <img src="{{ clan['emblems']['x64']['wot'] }}" style="vertical-align: middle">
-                {{ clan['tag'] }}
+                [{{ clan['tag'] }}]
                 {{ clan['name'] }}
             </a>
                 </span>
